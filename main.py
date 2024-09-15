@@ -28,7 +28,7 @@ app.add_middleware(
 
 url = URL('/home')
 # INFO: The path that u need to change to the ulr -> 'url_ngrok/engine/'
-url_req = URL('https://engine-numerical.onrender.com')
+url_req = URL('https://engine-numerical.onrender.com/engine')
 # url_req = 'https://efe9-2803-1800-11c4-4541-cd84-4b70-7f0c-ae3a.ngrok-free.app/engine/'
 
 @app.get('/home', tags=['Home'])
