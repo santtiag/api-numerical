@@ -11,7 +11,7 @@ app.title = 'Numerical Project'
 
 origins = [
     # "https://api-numerical.onrender.com", # render_url
-    # "http://localhost:3000", # localhost
+    "http://localhost:3000", # localhost
     "https://1faa-2800-e2-c180-5c6-00-2.ngrok-free.app" # ngrok_url
 ]
 
