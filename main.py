@@ -12,7 +12,7 @@ app.title = 'Numerical Project'
 origins = [
     # "https://api-numerical.onrender.com", # render_url
     "http://localhost:3000", # localhost
-    "https://1faa-2800-e2-c180-5c6-00-2.ngrok-free.app" # ngrok_url
+    # "https://1faa-2800-e2-c180-5c6-00-2.ngrok-free.app" # ngrok_url
 ]
 
 app.add_middleware(
@@ -29,6 +29,7 @@ app.add_middleware(
 url = URL('/home')
 # INFO: The path that u need to change to the ulr -> 'url_ngrok/engine/'
 url_req = URL('https://engine-numerical.onrender.com/engine')
+# url_req = URL('http://localhost:5000/engine') # localhost
 # url_req = 'https://efe9-2803-1800-11c4-4541-cd84-4b70-7f0c-ae3a.ngrok-free.app/engine/'
 
 @app.get('/home', tags=['Home'])
@@ -37,6 +38,21 @@ async def print():
 
 
 # INFO: <-- INTERPOLATION -->
+@app.get(url.home.inter.lin_seg, tags=['Calculate Interpolation'])
+async def calculate_i_lin_segm(x: str = Query(...), y: str = Query(...)):
+    x_values = [float(val) for val in x.split(',')]
+    y_values = [float(val) for val in y.split(',')]
+
+    playload = {'x': x_values, 'y': y_values}
+
+    response = requests.post(url_req.home.inter.lin_seg, json=playload)
+
+    result = response.json()
+    if response.status_code == 200:
+        return JSONResponse(content=jsonable_encoder(result))
+    else:
+        return JSONResponse(content=jsonable_encoder(result), status_code=404)
+
 @app.get(url.home.inter.quad_seg , tags=['Calculate Interpolation'])
 async def calculate_i_quadratic_segm(x: str = Query(...), y: str = Query(...)):
     x_values = [float(val) for val in x.split(',')]
@@ -125,6 +141,70 @@ async def calculate_r_nonlinear_polynomial(x: str = Query(...), y: str = Query(.
     playload = {'x': x_values, 'y': y_values, 'n': n}
 
     response = requests.post(url_req.home.reg.nonlin.poly, json=playload)
+
+    if response.status_code == 200:
+        result = response.json()
+        return JSONResponse(content=jsonable_encoder(result))
+    else:
+        raise HTTPException(status_code=500, detail='Error processing data')
+
+# NOTE: DEFINITE INTEGRATION
+@app.get(url.home.d_i.rect,tags=['Definite Integration'])
+async def calculate_di_rectangle(x: str = Query(...), y: str = Query(...)):
+    x_values = [float(val) for val in x.split(',')]
+    y_values = [float(val) for val in y.split(',')]
+
+    playload = {'x': x_values, 'y': y_values}
+
+    response = requests.post(url_req.home.d_i.rect, json=playload)
+
+    if response.status_code == 200:
+        result = response.json()
+        return JSONResponse(content=jsonable_encoder(result))
+    else:
+        raise HTTPException(status_code=500, detail='Error processing data')
+
+
+@app.get(url.home.d_i.trap, tags=['Definite Integration'])
+async def calculate_di_trapezium(x: str = Query(...), y: str = Query(...)):
+    x_values = [float(val) for val in x.split(',')]
+    y_values = [float(val) for val in y.split(',')]
+
+    playload = {'x': x_values, 'y': y_values}
+
+    response = requests.post(url_req.home.d_i.trap, json=playload)
+
+    if response.status_code == 200:
+        result = response.json()
+        return JSONResponse(content=jsonable_encoder(result))
+    else:
+        raise HTTPException(status_code=500, detail='Error processing data')
+
+
+@app.get(url.home.d_i.para, tags=['Definite Integration'])
+async def calculate_di_parabola(x: str = Query(...), y: str = Query(...)):
+    x_values = [float(val) for val in x.split(',')]
+    y_values = [float(val) for val in y.split(',')]
+
+    playload = {'x': x_values, 'y': y_values}
+
+    response = requests.post(url_req.home.d_i.para, json=playload)
+
+    if response.status_code == 200:
+        result = response.json()
+        return JSONResponse(content=jsonable_encoder(result))
+    else:
+        raise HTTPException(status_code=500, detail='Error processing data')
+
+
+@app.get(url.home.d_i.ca, tags=['Definite Integration'])
+async def calculate_di_cubic_approximation(x: str = Query(...), y: str = Query(...)):
+    x_values = [float(val) for val in x.split(',')]
+    y_values = [float(val) for val in y.split(',')]
+
+    playload = {'x': x_values, 'y': y_values}
+
+    response = requests.post(url_req.home.d_i.ca, json=playload)
 
     if response.status_code == 200:
         result = response.json()

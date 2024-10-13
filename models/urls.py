@@ -1,13 +1,14 @@
 
 class URL:
     def __init__(self, home_t):
-        self.home_t = home_t 
+        self.home_t = home_t
         self.home = self.Home(home_t)
 
     class Home:
-        def __init__(self, home_t, inter_t = '/interpolation', reg_t = '/regression'):
+        def __init__(self, home_t, inter_t = '/interpolation', reg_t = '/regression', d_i_t='/definite_integration'):
             self.inter = self.Interpolation(f'{home_t}{inter_t}')
             self.reg = self.Regression(f'{home_t}{reg_t}')
+            self.d_i = self.DefiniteIntegration(f'{home_t}{d_i_t}')
 
         class Interpolation:
             def __init__(self, inter_t):
@@ -26,3 +27,9 @@ class URL:
                     self.pot = f"{nonlin_t}/potential"
                     self.poly = f"{nonlin_t}/polynomial"
 
+        class DefiniteIntegration:
+            def __init__(self, d_i_t):
+                self.rect = f"{d_i_t}/rectangle"
+                self.trap = f"{d_i_t}/trapezium"
+                self.para = f"{d_i_t}/parabola"
+                self.ca = f"{d_i_t}/cubic_approximation"
