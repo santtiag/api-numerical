@@ -10,6 +10,7 @@ from routers.interpolation import interpolation_router
 from routers.regression import regression_router
 from routers.definite_integration import definite_integration_router
 from routers.methodology import methodology_router
+from routers.auth import auth_router
 
 app = FastAPI()
 app.title = 'Numerical Project'
@@ -40,3 +41,4 @@ app.include_router(regression_router)
 app.include_router(definite_integration_router)
 app.include_router(methodology_router)
 app.include_router(differential_equation_router)
+app.include_router(auth_router)
